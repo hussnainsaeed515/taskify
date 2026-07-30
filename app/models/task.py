@@ -1,10 +1,13 @@
-from sqlalchemy import column ,integer,boolean,string,datetime
+from sqlalchemy import Column, Integer, Boolean, String, DateTime
 from datetime import datetime
 from app.database import Base
-class task(Base):
-    __tablename__=="task"
-    id=column(primary_key=True)
-    title=column(string,nullable=False)
-    description=column(string,nullable=True)
-    is_completed=column(boolean,default=False)
-    created_at=column(datetime,default=datetime.utcnow)
+
+
+class Task(Base):
+    __tablename__ = "tasks"
+
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String, nullable=False)
+    description = Column(String, nullable=True)
+    is_completed = Column(Boolean, default=False)
+    created_at = Column(DateTime, default=datetime.utcnow)
