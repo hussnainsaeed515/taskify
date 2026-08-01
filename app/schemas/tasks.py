@@ -12,7 +12,7 @@ class TaskResponse(BaseModel):
     description:Optional[str]=None
     created_at:datetime
     is_completed:bool
-    class config:
+    class Config:
         from_attributes=True
 class TaskUpdate(BaseModel):
     title:Optional[str]=None
