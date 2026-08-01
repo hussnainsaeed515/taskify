@@ -16,10 +16,4 @@ app.include_router(auth_router)
 def root():
     return {"message": "Welcome to Taskify API"}
 
-
-
-
-
-
-
     
