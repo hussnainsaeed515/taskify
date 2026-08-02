@@ -4,10 +4,11 @@ from app.schemas.tasks import TaskCreate, TaskResponse, TaskUpdate
 from app.database import get_db
 from app.models.task import Task
 router = APIRouter(prefix="/tasks", tags=["tasks"])
+from app.core.security import get_current_user
+
 
 @router.post("", response_model=TaskResponse)
-@router.post("/", response_model=TaskResponse, include_in_schema=False)
-def create_task(task: TaskCreate, db: Session = Depends(get_db)):
+def create_task(task: TaskCreate, db: Session = Depends(get_db), current_user: str = Depends(get_current_user)):
     new_task = Task(title=task.title, description=task.description)
     try:
         db.add(new_task)
@@ -19,7 +20,6 @@ def create_task(task: TaskCreate, db: Session = Depends(get_db)):
         raise HTTPException(status_code=500, detail="Database error occurred while creating task")
 
 @router.get("", response_model=list[TaskResponse])
-@router.get("/", response_model=list[TaskResponse], include_in_schema=False)
 def get_all_tasks(db: Session = Depends(get_db)):
     return db.query(Task).all()
 
